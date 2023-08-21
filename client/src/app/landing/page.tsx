@@ -1,60 +1,37 @@
-"use client"
+import client from "@/lib/apollo-client";
+import Graphql from "./graphql";
+import { gql } from "@apollo/client";
+import Component1 from "./component-1";
+import Component2 from "./component-2";
+import { Suspense } from "react";
 
-import { gql, useQuery } from "@apollo/client";
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+const LandingPage = (params: unknown) => {
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
-type Ttodo = {
-  id: string,
-  title: string,
-  completed: boolean,
-}
+  // const { data } = await client.query({
+  //   query: gql`
+  //     query Query {
+  //       getTodos {
+  //         id
+  //         title
+  //         completed
+  //       }
+  //     }
+  //   `,
+  // });
 
-const Query = gql `
-query Query {
-  getTodos {
-    id
-    title
-    completed
-  }
-}
-
-`;
-
-
-const LandingPage = (props: unknown) => {
-  const {data, error, loading} = useQuery(Query);
-  const router = useRouter();
-
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  console.dir(router);
-  console.dir(pathname);
-  console.dir(props);
-  console.dir(searchParams);
-
-  if(loading) return <h1>loading...</h1>
-  if(error){
-    console.dir(error);
-    return;
-  }
-
-
-
-
-  console.dir(data.getTodos)
-  return <div>
-    <table>
-      <tbody>
-        {
-          data.getTodos.map((todo: Ttodo) => <tr key={todo.id}>
-            <td>{todo.title}</td>
-            <td>{todo.completed ? "true": "false"}</td>
-          </tr>)
-        }
-      </tbody>
-    </table>
-  </div>
-}
+  return (
+    <div>
+      <Suspense fallback={<p>Loading outside</p>}>
+        <Component1 />
+      </Suspense>
+      <Suspense fallback={<p>Loading outside</p>}>
+        <Component2 />
+      </Suspense>
+      hihihihhih
+      {/* <Graphql data={data} params={params} /> */}
+    </div>
+  );
+};
 
 export default LandingPage;
