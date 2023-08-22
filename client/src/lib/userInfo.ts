@@ -4,7 +4,8 @@ function setLog (value: boolean) {
 }
 
 const userInfo = () => {
-  // This function can be used to fetch the data of user from database, for authentication purposes.
+  // This function should be used to fetch the data of user from database, for authentication purposes.
+  // when visiting a new page next compiles the page in dev mode. So, log resets to false
 
   return { log, setLog };
 };
