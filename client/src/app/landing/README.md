@@ -1,0 +1,1 @@
+This folder shows how parent server component in page.tsx load and in turn calls child server components, which are loaded inside Suspense component from react. If any of the component throws error including parent server component, error.tsx loads
